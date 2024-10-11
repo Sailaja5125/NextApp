@@ -1,7 +1,6 @@
-import { connect } from "@/dbConfig/dbConfig";
-import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-export async function GET(){
+
+export async function GET(): Promise<NextResponse<{ message: string; success: boolean; }> | NextResponse<{ error: any; }>>{
   try {
     const response = await NextResponse.json({
         message:"Logout Successful",
