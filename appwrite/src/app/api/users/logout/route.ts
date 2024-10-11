@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse<{ message: string; success: boolean; }> | NextResponse<{ error: any; }>>{
   try {
-    const response = await NextResponse.json({
+    const response = NextResponse.json({
         message:"Logout Successful",
         success:true
     })
