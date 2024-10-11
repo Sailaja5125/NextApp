@@ -41,7 +41,7 @@ export default function VerifyEmail(){
                 <Link href="/login" className="text-green-700">
                 login
                 </Link>
-            </div>:<h2>There is an Error</h2>
+            </div>:<h2>There is an Error{error}</h2>
           }
         </div>
         </>
