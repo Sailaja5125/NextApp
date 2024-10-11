@@ -6,7 +6,7 @@ export interface IUserModel extends Document {
     email: string;
     password: string;
     isVerified:boolean;
-    avatar?: string; // Optional property for the avatar
+    avatar: string; // Optional property for the avatar
     verifyToken:string,
     verifyTokenExpiry:Date,
     forgotPasswordToken:string,
