@@ -1,5 +1,5 @@
-import { error } from "console";
-import mongoose, { connection } from "mongoose";
+
+import mongoose from "mongoose";
 
 export async function connect() {
     try {
