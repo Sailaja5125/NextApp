@@ -1,10 +1,11 @@
-import { config } from "@/config/config";
+import conf from "@/conf/config";
 import { Client, Account, ID } from "appwrite";
 
+// strict Note use appwriteversion npm install appwrite@13.0.1 do not use newer versions 
 type CreateUserAccount = {
-  username: string;
-  email: string;
-  password: string;
+  email: string,
+  password: string,
+  name: string,
 };
 
 type LoginUserAccount = {
@@ -12,21 +13,20 @@ type LoginUserAccount = {
   password: string;
 };
 
-const appwriteClient = new Client();
-appwriteClient
-  .setEndpoint(config.appwriteUrl)
-  .setProject("next-meets-appwrite");
+const appwriteClient = new Client()
+
+appwriteClient.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId);
 
 export const account = new Account(appwriteClient);
 
 class AppwriteService {
-  async createUserAccount({ username, email, password }: CreateUserAccount) {
+  async createUserAccount({ email, password, name }: CreateUserAccount) {
     try {
       const useraccount = await account.create(
         ID.unique(),
-        username,
         email,
-        password
+        password,
+        name,
       );
       if (useraccount) {
         return this.loginUserAccount({ email, password });
@@ -39,7 +39,7 @@ class AppwriteService {
   }
   async loginUserAccount({ email, password }: LoginUserAccount) {
     try {
-        return await account.createEmailPasswordSession(email , password)
+        return await account.createEmailSession(email , password)
     } catch (error) {
         throw error
     }
@@ -51,6 +51,13 @@ class AppwriteService {
     } catch (error){}
     return false
   }
+  async logout(){
+    try {
+      return account.deleteSession("current")
+    } catch (error) {
+      throw error
+    }
+  }
   async getCurrentUser(){
     try {
         return account.get()
@@ -61,3 +68,5 @@ class AppwriteService {
 }
 
 export const appwriteService =new AppwriteService()
+
+// -- failed project due to appwrite 
